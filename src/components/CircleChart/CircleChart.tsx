@@ -34,7 +34,35 @@ function CircleChart(props: CircleChartProps) {
     }, [setOffset, CIRCUMFERENCE, props.progress, offset])
 
     return <CC.Wrapper>
-        todo: circle chart
+        <CC.SvgWrapper style={{ width: props.size, height: props.size }}>
+            <CC.Svg width={props.size} height={props.size}>
+                <CC.CircleBG
+                    cy={CENTER}
+                    cx={CENTER}
+                    r={RADIUS}
+                />
+                <CC.Circle
+                    fill="none"
+
+                    cy={CENTER}
+                    cx={CENTER}
+                    r={RADIUS}
+
+                    stroke={STROKE_COLOR}
+                    strokeWidth={STROKE_WIDTH}
+                    strokeDasharray={CIRCUMFERENCE}
+                    strokeDashoffset={offset}
+                />
+            </CC.Svg>
+            <CC.Percentage>
+                { props.progress }%
+            </CC.Percentage>
+        </CC.SvgWrapper>
+        {
+            props.caption && <CC.Caption>
+                { props.caption }
+            </CC.Caption>
+        }
     </CC.Wrapper>
 }
 
