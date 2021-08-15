@@ -1,24 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import NavBar from './components/NavBar';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import CalcView from './views/Calc.view';
 import Contact from './views/Contact.view';
 import Home from './views/Home.view';
 import NotFound404 from './views/NotFound404.view';
+import UserView from './views/User.view';
 
 ReactDOM.render(
   <React.StrictMode>
-    <div>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/contato">Contato</a></li>
-      </ul>
-    </div>
     <BrowserRouter>
+      <NavBar />
       <Switch>
         <Route path={'/'} exact component={Home} />
         <Route path={'/contato'} exact component={Contact} />
+        <Route path={'/usuario/:userId'} component={UserView} />
+        <Route path={'/calc/:a/:b'} component={CalcView} />
         <Route component={NotFound404} />
       </Switch>
     </BrowserRouter>
