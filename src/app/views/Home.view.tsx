@@ -10,8 +10,8 @@ export default function Home() {
 
     return <DefaultLayout>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: 32}}>
-        <UserTopTags />
-        <UserEarnings />
+            <UserTopTags />
+            <UserEarnings />
         </div>
         <UserPerformance />
         <PostsList />

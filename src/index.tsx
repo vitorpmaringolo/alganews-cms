@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './core/imports.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import EditorsListView from './app/views/EditorsList.view';
 import Home from './app/views/Home.view';
 import NotFound404 from './app/views/NotFound404.view';
 import GlobalStyles from './core/globalStyles';
-import EditorsListView from './app/views/EditorsList.view';
+import './core/imports.css';
+import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
