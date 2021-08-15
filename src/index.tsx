@@ -1,27 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import './index.css';
+import './core/imports.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
-import CalcView from './views/Calc.view';
-import Contact from './views/Contact.view';
-import Home from './views/Home.view';
-import NotFound404 from './views/NotFound404.view';
-import UserView from './views/User.view';
+import Home from './app/views/Home.view';
+import NotFound404 from './app/views/NotFound404.view';
+import GlobalStyles from './core/globalStyles';
+import EditorsListView from './app/views/EditorsList.view';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <NavBar />
       <Switch>
-        <Route path={'/'} exact component={Home} />
-        <Route path={'/contato'} exact component={Contact} />
-        <Route path={'/usuario/:userId'} component={UserView} />
-        <Route path={'/calc/:a/:b'} component={CalcView} />
+        <Route path="/" exact component={Home} />
+        <Route path="/editores" exact component={EditorsListView} />
         <Route component={NotFound404} />
       </Switch>
     </BrowserRouter>
+    <GlobalStyles />
   </React.StrictMode>,
   document.getElementById('root')
 );
