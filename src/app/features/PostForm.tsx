@@ -3,9 +3,11 @@ import { Tag } from "react-tag-input"
 import styled from "styled-components"
 import countWordsInMarkdown from "../../core/utils/countWordsInMarkdown"
 import info from "../../core/utils/info"
+import PostService from "../../sdk/services/Post.service"
 import Button from "../components/Button/Button"
 import ImageUpload from "../components/ImageUpload"
 import Input from "../components/Input/Input"
+import Loading from "../components/Loading"
 import MarkdownEditor from "../components/MarkdownEditor"
 import TagInput from "../components/TagInput"
 import WordPriceCounter from "../components/WordPriceCounter"
@@ -13,21 +15,45 @@ import WordPriceCounter from "../components/WordPriceCounter"
 export default function PostForm() {
     const [tags, setTags] = useState<Tag[]>([])
     const [body, setBody] = useState('')
+    const [title, setTitle] = useState('')
+    const [imageUrl, setImageUrl] = useState('')
 
-    function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault()
-        info({
-            title: 'Post salvo com sucesso',
-            description: 'Você acabou de salvar o post'
-        })
+    const [publishing, setPublishing] = useState(false)
+
+    async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        try {
+            setPublishing(true)
+            const newPost = {
+                body,
+                title,
+                tags: tags.map(tag => tag.text),
+                imageUrl
+            }
+    
+            const insertedPost = await PostService.insertNewPost(newPost)
+    
+            info({
+                title: 'Post salvo com sucesso',
+                description: 'Você acabou de criar o post com o id ' + insertedPost.id
+            })
+        } finally {
+            setPublishing(false)
+        }
     }
 
     return <PostFormWrapper onSubmit={handleFormSubmit}>
+        <Loading show={publishing} />
         <Input
             label="título"
+            value={title}
+            onChange={e => setTitle(e.currentTarget.value)}
             placeholder="e.g.: Como fiquei rico aprendendo React"
         />
-        <ImageUpload label="Thumbnail do post" />
+        <ImageUpload
+            onImageUpload={setImageUrl}
+            label="Thumbnail do post"
+        />
         <MarkdownEditor onChange={setBody}/>
         <TagInput
             tags={tags}
