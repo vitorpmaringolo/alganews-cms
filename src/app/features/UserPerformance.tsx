@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import Skeleton from "react-loading-skeleton"
+import { MetricService } from "vitorpmaringolo-sdk"
 import withBoundary from "../../core/hoc/withBoundary"
 import transformEditorMonthlyEarningsIntoChartJs from "../../core/utils/transformEditorMonthlyEarningsIntoChartJs"
-import MetricService from "../../sdk/services/Metric.service"
 import Chart, { ChartProps } from "../components/Chart/Chart"
 
 function UserPerformance() {
