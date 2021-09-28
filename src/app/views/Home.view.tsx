@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import usePageTitle from "../../core/hooks/usePageTitle"
 import selectPaginatedPosts from "../../core/selectors/selectPaginatedPosts"
-import { addPost } from "../../core/store/Post.slice"
+import { fetchPosts } from "../../core/store/Post.slice"
 import ErrorBoundary from "../components/ErrorBoundary"
 import PostsList from "../features/PostsList"
 import UserEarnings from "../features/UserEarnings"
@@ -54,13 +54,11 @@ export default function Home() {
     const dispatch = useDispatch();
     const paginatedPosts = useSelector(selectPaginatedPosts);
 
-    useEffect(() => {
-        dispatch(addPost(fakePost))
-    }, [dispatch])
+    useEffect(() => { }, [dispatch])
 
     return <DefaultLayout>
         <button onClick={() => {
-            dispatch(addPost(fakePost))
+            dispatch(fetchPosts({ page: 2 }));
         }}>
             disparar ação
         </button>
