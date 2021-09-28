@@ -58,7 +58,7 @@ export default function Home() {
 
     return <DefaultLayout>
         <button onClick={() => {
-            dispatch(fetchPosts({ page: 2 }));
+            dispatch(fetchPosts({ page: 0 }));
         }}>
             disparar ação
         </button>

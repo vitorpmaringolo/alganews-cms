@@ -1,11 +1,13 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isFulfilled, isPending, PayloadAction } from "@reduxjs/toolkit";
 import { Post, PostService } from "vitorpmaringolo-sdk";
 
 interface PostSliceState {
     pagainated?: Post.Paginated;
+    fetching: boolean;
 }
 
 const initialState: PostSliceState = {
+    fetching: false,
     pagainated: {
         page: 0,
         size: 0,
@@ -30,6 +32,15 @@ const postSlice = createSlice({
         addPost(state, action: PayloadAction<Post.Summary>) {
             state.pagainated?.content?.push(action.payload);
         }
+    },
+    extraReducers(builder) {
+        builder.addCase(fetchPosts.fulfilled, (state, action) => {
+            state.pagainated = action.payload;
+        }).addMatcher(isPending, (state) => {
+            state.fetching = true;
+        }).addMatcher(isFulfilled, (state) => {
+            state.fetching = false;
+        })
     }
 })
 
