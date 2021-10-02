@@ -1,13 +1,15 @@
-import { createAsyncThunk, createSlice, isFulfilled, isPending, PayloadAction } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createReducer, isFulfilled, isPending, isRejected } from "@reduxjs/toolkit";
 import { Post, PostService } from "vitorpmaringolo-sdk";
 
 interface PostSliceState {
     pagainated?: Post.Paginated;
     fetching: boolean;
+    counter: number;
 }
 
 const initialState: PostSliceState = {
     fetching: false,
+    counter: 0,
     pagainated: {
         page: 0,
         size: 0,
@@ -25,24 +27,20 @@ export const fetchPosts = createAsyncThunk(
     }
 )
 
-const postSlice = createSlice({
-    name: "post",
-    initialState,
-    reducers: {
-        addPost(state, action: PayloadAction<Post.Summary>) {
-            state.pagainated?.content?.push(action.payload);
-        }
-    },
-    extraReducers(builder) {
-        builder.addCase(fetchPosts.fulfilled, (state, action) => {
-            state.pagainated = action.payload;
-        }).addMatcher(isPending, (state) => {
-            state.fetching = true;
-        }).addMatcher(isFulfilled, (state) => {
-            state.fetching = false;
-        })
-    }
-})
+export const increment = createAction('post/increment')
 
-export const postReducer = postSlice.reducer;
-export const { addPost } = postSlice.actions;
+export const postReducer = createReducer(initialState, (builder) => {
+    builder
+    .addCase(increment, (state) => {
+        state.counter++;
+    })
+    .addCase(fetchPosts.fulfilled, (state, action) => {
+        state.pagainated = action.payload;
+    }).addMatcher(isPending, (state) => {
+        state.fetching = true;
+    }).addMatcher(isFulfilled, (state) => {
+        state.fetching = false;
+    }).addMatcher(isRejected, (state) => {
+        state.fetching = false;
+    });
+})
