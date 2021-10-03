@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Post } from 'vitorpmaringolo-sdk';
 import selectPaginatedPosts from '../selectors/selectPaginatedPosts';
@@ -10,9 +11,12 @@ export default function usePosts() {
     const paginatedPosts = useSelector(selectPaginatedPosts)
     const loading = useSelector(selectPostsFetching)
 
-    async function fetchPosts(query: Post.Query) {
-        dispatch(PostActions.fetchPosts(query))
-    }
+    const fetchPosts = useCallback(
+        async function(query: Post.Query) {
+            dispatch(PostActions.fetchPosts(query))
+        }, [dispatch]
+    );
+
 
     return {
         paginatedPosts, loading, fetchPosts
