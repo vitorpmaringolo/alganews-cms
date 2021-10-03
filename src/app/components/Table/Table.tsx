@@ -35,56 +35,46 @@ export default function Table<T extends Object>({
     }, [pageIndex, onPaginate])
 
       return (
-          <>
-          <T.Wrapper cellPadding={0} cellSpacing={0} {...getTableProps()}>
-              <T.Heading>
-                      {
-                          headerGroups.map(headerGroup => (
-                              <T.HeadingRow {...headerGroup.getHeaderGroupProps()}>
-                                  {
-                                      headerGroup.headers.map(column => (
-                                        <T.HeadingCell {...column.getHeaderProps()}>
-                                            {column.render('Header')}
-                                        </T.HeadingCell>
-                                      ))
-                                  }
-                              </T.HeadingRow>
-                          ))
-                      }
-              </T.Heading>
-              <T.Body {...getTableBodyProps()}>
-                  {
-                      rows.map(row => {
-                          prepareRow(row)
-                          return <T.BodyRow {...row.getRowProps()}>
-                              {
-                                  row.cells.map(cell => {
-                                      return <T.BodyCell {...cell.getCellProps()}>
-                                          { cell.render('Cell') }
-                                      </T.BodyCell>
-                                  })
-                              }
-                          </T.BodyRow>
-                        })
-                  }
-              </T.Body>
-          </T.Wrapper>
-          {
-              !rows.length && <div style={{ backgroundColor: transparentize(0.95, '#274060') }}>
+          <div>
+            <T.Wrapper cellPadding={0} cellSpacing={0} {...getTableProps()}>
+                <T.Heading>
+                        {headerGroups.map(headerGroup => (
+                            <T.HeadingRow {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <T.HeadingCell {...column.getHeaderProps()}>
+                                        {column.render('Header')}
+                                    </T.HeadingCell>
+                                ))}
+                            </T.HeadingRow>
+                        ))}
+                </T.Heading>
+                <T.Body {...getTableBodyProps()}>
+                    {rows.map(row => {
+                        prepareRow(row)
+                        return <T.BodyRow {...row.getRowProps()}>
+                            {row.cells.map(cell => {
+                                    return <T.BodyCell {...cell.getCellProps()}>
+                                        { cell.render('Cell') }
+                                    </T.BodyCell>
+                            })}
+                        </T.BodyRow>
+                    })}
+                </T.Body>
+            </T.Wrapper>
+            {!rows.length && (<div style={{ backgroundColor: transparentize(0.95, '#274060') }}>
                 <NoData height={360}/>
-              </div>
-          }
+            </div>)}
 
-          <T.TablePagination>
-              <ReactPaginate
-                pageCount={pageCount}
-                onPageChange={page => gotoPage(page.selected)}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={4}
-                nextLabel={<Icon path={mdiChevronRight} size={'16px'} />}
-                previousLabel={<Icon path={mdiChevronLeft} size={'16px'} />}
-              />
-          </T.TablePagination>
-          </>
+            <T.TablePagination>
+                <ReactPaginate
+                    pageCount={pageCount}
+                    onPageChange={(page) => gotoPage(page.selected)}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={4}
+                    nextLabel={<Icon path={mdiChevronRight} size={"16px"} />}
+                    previousLabel={<Icon path={mdiChevronLeft} size={"16px"} />}
+                />
+            </T.TablePagination>
+          </div>
       )
 }
