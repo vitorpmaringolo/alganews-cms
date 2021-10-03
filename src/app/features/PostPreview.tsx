@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import styled from "styled-components"
-import { Post, PostService } from "vitorpmaringolo-sdk"
 import withBoundary from "../../core/hoc/withBoundary"
+import useSinglePost from "../../core/hooks/useSinglePost"
 import confirm from "../../core/utils/confirm"
-import info from "../../core/utils/info"
 import modal from "../../core/utils/modal"
 import Button from "../components/Button/Button"
 import Loading from "../components/Loading"
@@ -14,16 +13,7 @@ interface PostPreviewProps {
 }
 
 function PostPreview(props: PostPreviewProps) {
-    const [post, setPost] = useState<Post.Detailed>()
-    const [loading, setLoading] = useState(false)
-
-    async function publishPost() {
-        await PostService.publishExistingPost(props.postId)
-        info({
-            title: 'Post publicado',
-            description: 'Você publicou o post com sucesso'
-        })
-    }
+    const { fetchPost, loading, post, publishPost } = useSinglePost();
 
     function reopenModal() {
         modal({
@@ -32,16 +22,12 @@ function PostPreview(props: PostPreviewProps) {
     }
 
     useEffect(() => {
-        setLoading(true)
-        PostService.getExistingPost(props.postId).then(setPost)
-            .finally(() => setLoading(false))
-    }, [props.postId])
+        fetchPost(props.postId);
+    }, [fetchPost, props.postId]);
 
-    if (loading)
-        return <Loading show/>
+    if (loading) return <Loading show/>;
 
-    if (!post)
-        return null
+    if (!post) return null;
 
     return <PostPreviewWrapper>
         <PostPreviewHeading>
@@ -58,7 +44,7 @@ function PostPreview(props: PostPreviewProps) {
                             title: 'Publicar o post?',
                             onConfirm: publishPost,
                             onCancel: reopenModal
-                        })
+                        });
                     }}
                 />
                 <Button

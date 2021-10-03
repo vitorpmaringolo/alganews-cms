@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import styled from "styled-components";
-import { Metric, MetricService } from "vitorpmaringolo-sdk";
+import useTopTags from "../../core/hooks/useTopTags";
 import CircleChart from "../components/CircleChart";
 
 export default function UserTopTags() {
-    const [topTags, setTopTags] = useState<Metric.EditorTagRatio>([])
+    const { topTags, fetchTopTags } = useTopTags();
 
     useEffect(() => {
-        MetricService.getTop3Tags().then(setTopTags)
-    }, [])
+        fetchTopTags();
+    }, [fetchTopTags])
 
     if (!topTags.length)
         return <UserTopTagsWrapper>

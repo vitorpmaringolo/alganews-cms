@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import styled from "styled-components";
-import { User, UserService } from "vitorpmaringolo-sdk";
+import useUser from "../../core/hooks/useUser";
 import ValueDescriptor from "../components/ValueDescriptor/ValueDescriptor";
 
 export default function UserEarnings() {
-    const [user, setUser] = useState<User.Detailed>()
+    const { user,fetchUser } = useUser();
 
     useEffect(() => {
-        UserService.getDetailedUser(6).then(setUser)
-    }, [])
+        fetchUser();
+    }, [fetchUser])
 
     if (!user)
         return <UserTopTagsWrapper style={{ height: 123 }}>
