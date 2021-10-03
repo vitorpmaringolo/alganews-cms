@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import styled from "styled-components";
-import { getEditorDescription, User, UserService } from "vitorpmaringolo-sdk";
+import { getEditorDescription } from "vitorpmaringolo-sdk";
 import useEditors from "../../core/hooks/useEditors";
 import Profile from "../components/Profile";
 

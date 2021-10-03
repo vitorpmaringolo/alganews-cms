@@ -19,7 +19,7 @@ export default function Home() {
     return <DefaultLayout>
         {loading ? 'carregando' : 'finalizado'}
         <hr />
-        {paginatedPosts?.map(post => <li>{post.title}</li>)}
+        {paginatedPosts?.map(post => <li key={post.id}>{post.title}</li>)}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: 32}}>
             <UserTopTags />
             <UserEarnings />
