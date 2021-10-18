@@ -1,6 +1,5 @@
-import { RootState } from './../store/index';
-
+import { RootState } from "../store";
 
 export default function selectPaginatedPosts(state: RootState) {
-    return state.post.pagainated;
+  return state.post.paginated;
 }
