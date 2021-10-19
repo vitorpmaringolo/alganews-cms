@@ -29,6 +29,10 @@ function PostPreview(props: PostPreviewProps) {
 
   if (!post) return null;
 
+  function publish() {
+    return publishPost(props.postId);
+  }
+
   return (
     <PostPreviewWrapper>
       <PostPreviewHeading>
@@ -41,7 +45,7 @@ function PostPreview(props: PostPreviewProps) {
             onClick={() => {
               confirm({
                 title: "Publicar o post?",
-                onConfirm: publishPost,
+                onConfirm: publish,
                 onCancel: reopenModal,
               });
             }}
