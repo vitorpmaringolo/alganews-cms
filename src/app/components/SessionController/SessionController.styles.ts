@@ -1,37 +1,37 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    flex-direction: column;
-    gap: 18px;
+  flex-direction: column;
+  gap: 18px;
 
-    border: 1px solid #CCC;
-    padding: 24px;
+  border: 1px solid #ccc;
+  padding: 23px;
 
-    color: #274060;
-`
+  color: #274060;
+`;
 
 export const Avatar = styled.img`
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-`
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+`;
 
 export const Name = styled.h2`
-    width: 100%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 
-    text-align: center;
+  text-align: center;
 
-    font-size: 18px;
-    font-weight: 600;
-`
+  font-size: 18px;
+  font-weight: 600;
+`;
 
 export const Description = styled.span`
-    font-size: 12px;
-`
+  font-size: 12px;
+`;
