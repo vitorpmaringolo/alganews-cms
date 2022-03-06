@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { User, UserService } from 'vitorpmaringolo-sdk';
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { User, UserService } from "vitorpmaringolo-sdk";
+import AuthService from "../../auth/Authorization.service";
 
 type PA<T> = PayloadAction<T>;
 
@@ -14,20 +15,25 @@ const initialState: AuthState = {
 };
 
 export const fetchUser = createAsyncThunk(
-  'auth/fetchUser',
+  "auth/fetchUser",
   async (userId: number, { rejectWithValue, dispatch }) => {
     try {
       const user = await UserService.getDetailedUser(userId);
+      if (user.role !== "EDITOR") {
+        window.alert("Você não tem acesso a este sistema");
+        AuthService.imperativelySendToLogout();
+        return;
+      }
       dispatch(storeUser(user));
     } catch (err) {
-      if (typeof err === 'object') return rejectWithValue({ ...err });
+      if (typeof err === "object") return rejectWithValue({ ...err });
     }
   }
 );
 
 const authSlice = createSlice({
   initialState,
-  name: 'auth',
+  name: "auth",
   reducers: {
     storeUser(state, action: PA<User.Detailed>) {
       state.user = action.payload;
