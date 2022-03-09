@@ -31,7 +31,6 @@ function EditorProfile(props: EditorProfileProps) {
 
   useEffect(() => {
     if (!editorIsAuthenticatedUser) fetchEditor(Number(params.id));
-    fetchEditor(Number(params.id));
   }, [fetchEditor, params.id, editorIsAuthenticatedUser]);
 
   return (
