@@ -4,10 +4,12 @@ import PostForm from "../features/PostForm";
 import { useParams } from "react-router-dom";
 
 export default function PostEditView() {
-    const params = useParams<{ id: string }>()
-    usePageTitle(params.id ? 'Edição de post' : 'Novo post')
+  const params = useParams<{ id: string }>();
+  usePageTitle("Edição de post");
 
-    return <DefaultLayout>
-        <PostForm postId={Number(params.id)} />
+  return (
+    <DefaultLayout>
+      <PostForm postId={Number(params.id)} />
     </DefaultLayout>
+  );
 }
