@@ -13,6 +13,8 @@ import NotFound404 from "./views/NotFound404.view";
 import PostCreateView from "./views/PostCreate.view";
 import PostEditView from "./views/PostEdit.view";
 
+const APP_BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export default function App() {
   const history = useHistory();
   const location = useLocation();
@@ -63,7 +65,7 @@ export default function App() {
         } = await AuthService.getFirstAccessToken({
           code,
           codeVerifier,
-          redirectUri: "http://localhost:3001/authorize",
+          redirectUri: `${APP_BASE_URL}/authorize`,
         });
 
         AuthService.setAccessToken(access_token);
